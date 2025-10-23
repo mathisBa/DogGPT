@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import * as Battery from "expo-battery";
 import * as Brightness from "expo-brightness";
+import { BackHandler, Platform } from "react-native";
+
+const handleQuit = () => {
+  if (Platform.OS === "android") {
+    BackHandler.exitApp();
+  } else {
+    console.log("Impossible de fermer l’app sur iOS");
+  }
+};
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
@@ -48,6 +57,9 @@ export default function IndexScreen() {
 
   // Fonction pour gérer le clic des boutons
   const handleButtonClick = (name: string) => {
+    if (name === "Quit") {
+      handleQuit();
+    }
     console.log(`Bouton "${name}" cliqué`);
   };
 
