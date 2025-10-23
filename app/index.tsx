@@ -14,6 +14,7 @@ import { useAudioPlayer } from "expo-audio";
 import * as SMS from "expo-sms";
 import { Image } from "react-native";
 import { Modal } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
@@ -93,13 +94,6 @@ export default function IndexScreen() {
     } else if (name === "Cliquer") {
       console.log('Bouton "Cliquer" cliqué');
       setModalVisible(true);
-    } else if (name === "Quit") {
-      console.log('Bouton "Quit" cliqué');
-      if (Platform.OS === "android") {
-        BackHandler.exitApp();
-      } else {
-        Alert.alert("Quit", "Impossible de quitter l'application sur iOS");
-      }
     }
   };
 
@@ -142,6 +136,18 @@ export default function IndexScreen() {
           </View>
         </View>
       </Modal>
+      <TouchableOpacity
+        style={styles.quitButton}
+        onPress={() => {
+          if (Platform.OS === "android") {
+            BackHandler.exitApp();
+          } else {
+            Alert.alert("Quit", "Impossible de quitter l'application sur iOS");
+          }
+        }}
+      >
+        <MaterialCommunityIcons name="door-open" size={28} color="#fff" />
+      </TouchableOpacity>
 
       <Text style={styles.text}>
         🔋 Batterie :{" "}
@@ -160,7 +166,7 @@ export default function IndexScreen() {
       )}
 
       <View style={styles.menu}>
-        {["Chat", "Dog", "Cliquer", "Quit"].map((item) => (
+        {["Chat", "Dog", "Cliquer"].map((item) => (
           <TouchableOpacity
             key={item}
             style={styles.button}
@@ -190,6 +196,23 @@ export default function IndexScreen() {
 }
 
 const styles = StyleSheet.create({
+  quitButton: {
+    position: "absolute",
+    top: 20, // plus haut
+    right: 20,
+    backgroundColor: "#E74C3C", // rouge
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 5, // pour Android
+  },
+
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.5)",
