@@ -13,6 +13,7 @@ import * as Brightness from "expo-brightness";
 import { useAudioPlayer } from "expo-audio";
 import * as SMS from "expo-sms";
 import { Image } from "react-native";
+import { Modal } from "react-native";
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
@@ -23,6 +24,7 @@ export default function IndexScreen() {
   const [dogClicks, setDogClicks] = useState(0);
   const [showStats, setShowStats] = useState(false);
   const [chatImage, setChatImage] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   // Préparer le player pour le miaulement
   const meowPlayer = useAudioPlayer(require("../assets/sounds/meow.mp3"));
@@ -90,7 +92,7 @@ export default function IndexScreen() {
       setChatImage(null);
     } else if (name === "Cliquer") {
       console.log('Bouton "Cliquer" cliqué');
-      setShowStats(true); // afficher la vue stats
+      setModalVisible(true);
     } else if (name === "Quit") {
       console.log('Bouton "Quit" cliqué');
       if (Platform.OS === "android") {
@@ -106,6 +108,41 @@ export default function IndexScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)} // bouton retour Android
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.statsText}>Chat : {chatClicks} clic(s)</Text>
+            <Text style={styles.statsText}>Dog : {dogClicks} clic(s)</Text>
+
+            <TouchableOpacity
+              style={styles.resetButton}
+              onPress={() => {
+                setChatClicks(0);
+                setDogClicks(0);
+                setModalVisible(false); // fermer la modal après reset
+              }}
+            >
+              <Text style={styles.buttonText}>Reset</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.resetButton,
+                { backgroundColor: "#4CAF50", marginTop: 10 },
+              ]}
+              onPress={() => setModalVisible(false)} // bouton fermer
+            >
+              <Text style={styles.buttonText}>Fermer</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       <Text style={styles.text}>
         🔋 Batterie :{" "}
         {batteryLevel !== null
@@ -140,23 +177,7 @@ export default function IndexScreen() {
           resizeMode="contain"
         />
       )}
-      {showStats && (
-        <View style={styles.statsContainer}>
-          <Text style={styles.statsText}>Chat : {chatClicks} clic(s)</Text>
-          <Text style={styles.statsText}>Dog : {dogClicks} clic(s)</Text>
 
-          <TouchableOpacity
-            style={styles.resetButton}
-            onPress={() => {
-              setChatClicks(0);
-              setDogClicks(0);
-              setShowStats(false); // cacher la vue stats après reset
-            }}
-          >
-            <Text style={styles.buttonText}>Reset</Text>
-          </TouchableOpacity>
-        </View>
-      )}
       {chatImage && (
         <Image
           source={{ uri: chatImage }}
@@ -169,6 +190,20 @@ export default function IndexScreen() {
 }
 
 const styles = StyleSheet.create({
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 12,
+    alignItems: "center",
+  },
+
   resetButton: {
     marginTop: 10,
     backgroundColor: "#E74C3C",
