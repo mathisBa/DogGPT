@@ -149,6 +149,13 @@ export default function IndexScreen() {
         <MaterialCommunityIcons name="door-open" size={28} color="#fff" />
       </TouchableOpacity>
 
+      <TouchableOpacity
+        style={styles.fabButton}
+        onPress={() => setModalVisible(true)} // ouvre la modal des stats
+      >
+        <MaterialCommunityIcons name="chart-bar" size={28} color="#fff" />
+      </TouchableOpacity>
+
       <Text style={styles.text}>
         🔋 Batterie :{" "}
         {batteryLevel !== null
@@ -166,7 +173,7 @@ export default function IndexScreen() {
       )}
 
       <View style={styles.menu}>
-        {["Chat", "Dog", "Cliquer"].map((item) => (
+        {["Chat", "Dog"].map((item) => (
           <TouchableOpacity
             key={item}
             style={styles.button}
@@ -204,6 +211,22 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 5, // pour Android
+  },
+  fabButton: {
+    position: "absolute",
+    bottom: 30,
+    right: 30,
+    backgroundColor: "#4A90E2", // couleur du bouton
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
