@@ -35,6 +35,8 @@ npm install
 npx expo start
 ```
 
+---
+
 ## Fonctionnalités principales
 
 - Batterie et luminosité : affichage du niveau de batterie et ajustement automatique de la luminosité si elle est trop faible.
@@ -42,10 +44,14 @@ npx expo start
 - Dog : affiche une image de chien aléatoire provenant de l'API dog.ceo.
 - Statistiques : compte les clics sur Chat et Dog, consultables via un bouton dédié. Possibilité de réinitialiser les compteurs.
 
+---
+
 ## Structure du projet
 
 app/index.tsx : écran principal avec toutes les fonctionnalités.
 assets/ : images et sons utilisés dans l’application.
+
+---
 
 ## Notes
 
