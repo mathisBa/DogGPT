@@ -79,6 +79,7 @@ export default function IndexScreen() {
       setChatImage(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPvhB-h6MlfBpBlFdWZYK7djP5c_Z-z-CQRw&s"
       );
+      setDogImage(null);
     } else if (name === "Dog") {
       console.log('Bouton "Dog" cliqué');
       setDogClicks((prev) => prev + 1);
@@ -86,6 +87,7 @@ export default function IndexScreen() {
         .then((response) => response.json())
         .then((data) => setDogImage(data.message))
         .catch((error) => console.error("Erreur fetch dog", error));
+      setChatImage(null);
     } else if (name === "Cliquer") {
       console.log('Bouton "Cliquer" cliqué');
       setShowStats(true); // afficher la vue stats
