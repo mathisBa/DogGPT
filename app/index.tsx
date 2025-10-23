@@ -137,6 +137,17 @@ export default function IndexScreen() {
         <View style={styles.statsContainer}>
           <Text style={styles.statsText}>Chat : {chatClicks} clic(s)</Text>
           <Text style={styles.statsText}>Dog : {dogClicks} clic(s)</Text>
+
+          <TouchableOpacity
+            style={styles.resetButton}
+            onPress={() => {
+              setChatClicks(0);
+              setDogClicks(0);
+              setShowStats(false); // cacher la vue stats après reset
+            }}
+          >
+            <Text style={styles.buttonText}>Reset</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -144,6 +155,15 @@ export default function IndexScreen() {
 }
 
 const styles = StyleSheet.create({
+  resetButton: {
+    marginTop: 10,
+    backgroundColor: "#E74C3C",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+
   statsContainer: {
     marginTop: 20,
     padding: 10,
