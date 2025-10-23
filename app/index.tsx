@@ -67,7 +67,8 @@ export default function IndexScreen() {
     if (name === "Chat") {
       console.log('Bouton "Chat" cliqué');
       setChatClicks((prev) => prev + 1);
-      meowPlayer.play(); // juste play(), plus besoin de loadAsync
+      meowPlayer.seekTo(0);
+      meowPlayer.play();
       const isAvailable = await SMS.isAvailableAsync();
       if (isAvailable) {
         await SMS.sendSMSAsync(
