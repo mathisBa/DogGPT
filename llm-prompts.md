@@ -23,9 +23,14 @@ Puis en plus petits points traitables en 1 Prompt :
 - Comment faire pour que mon application ait 2 tabs, un "index" et un "carte"
 - Dans l'onglet carte, demander la localisation de l'utilisateur et l'afficher sur la carte
 - Définir le zoom initial pour pouvoir voir la France entière
+- Rédiger le Readme
 - Sur la page index, comment définir la couleur du fond d'écran en fonction de la batterie de l'utilisateur par exemple : Bleu clair si > 50% et saumon si < 50 %
 - Si la luminosité n'est pas à 75% ou plus, il faut la définir au minimum.
 - Nous allons créer un menu sur cette page qui permet d'afficher "Chat" "Dog", "Cliquer" et "Quit".
 - Lorsque "Quit" est cliqué, on veut quitter l'app
 - Lorsque "Chat" est cliqué, cela joue un son de chat.
 - Il faut aussi que cela envoie un SMS à 0606060606 qui dit "Je n'aime pas les chats"
+- lorsque dog est cliqué, on récupère une image de chien aléatoire sur : trouver la source avant !
+- compter le nombre de clics de "chat" et le nombre de clics de "dog" sans l'afficher pour le moment
+- lorsque cliquer est cliqué, afficher le nombre de clics de "chat" et de "dog"
+- ajouter un bouton à cet élément pour réinitialiser les compteurs

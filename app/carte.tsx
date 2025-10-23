@@ -7,45 +7,41 @@ export default function CarteScreen() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
-  const [region, setRegion] = useState<Region | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [region, setRegion] = useState<Region>({
+    latitude: 46.603354, // Centre de la France
+    longitude: 1.888334,
+    latitudeDelta: 20, // 🔹 Zoom très large (France + pays voisins)
+    longitudeDelta: 20,
+  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      // Demande la permission
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission refusée pour accéder à la localisation.");
         Alert.alert(
           "Erreur",
           "Permission refusée pour accéder à la localisation."
         );
+        setLoading(false);
         return;
       }
 
-      // Récupère la localisation
       const loc = await Location.getCurrentPositionAsync({});
       setLocation(loc);
 
-      // Centre la carte sur la position de l'utilisateur
-      setRegion({
+      // 🔹 On garde le même niveau de zoom (20)
+      setRegion((prev) => ({
+        ...prev,
         latitude: loc.coords.latitude,
         longitude: loc.coords.longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
+      }));
+
+      setLoading(false);
     })();
   }, []);
 
-  if (errorMsg) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.text}>{errorMsg}</Text>
-      </View>
-    );
-  }
-
-  if (!region) {
+  if (loading) {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" />
@@ -64,7 +60,6 @@ export default function CarteScreen() {
               longitude: location.coords.longitude,
             }}
             title="Vous êtes ici"
-            description="Position actuelle"
           />
         )}
       </MapView>
