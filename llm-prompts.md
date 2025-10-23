@@ -45,3 +45,15 @@ Puis en plus petits points traitables en 1 Prompt :
 ## Remarques
 
 Avec mon sdk (54), il n'est pas possible de exit l'app. On doit simuler pour android et c'est impossible sur iOS. (réponse de chat GPT, à vérifier)
+
+## Dicussions avec GPT
+
+https://chatgpt.com/share/68fa2605-0e94-800f-84da-c294dd12d360
+
+## Chit-Chat
+
+J'ai réussi à avoir une seule conversation avec chatGPT pour résoudre ce sujet. Car dès le début j'ai séparé le sujet en plusieurs "tickets" représentants chacuns quelques lignes de code. Cela m'a permi de le guider et d'éviter qu'il parte dans tous les sens.
+L'avantage est que j'ai donc pu avancer en gardant le contexte et les réponses étaient donc pour la plupart pertinentes.
+Chaque ticket représente un ou plusieurs commit et/ou une branche.
+
+Au milieu de la conversation, j'ai hésité à recréer un prompt car il ne voulait pas changer d'idée. j'ai finalement réussi en appuyant ma question avec des morceaux de la documentation d'expo.
