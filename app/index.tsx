@@ -19,6 +19,8 @@ export default function IndexScreen() {
   const [brightness, setBrightness] = useState<number | null>(null);
   const [adjusted, setAdjusted] = useState<boolean>(false);
   const [dogImage, setDogImage] = useState<string | null>(null);
+  const [chatClicks, setChatClicks] = useState(0);
+  const [dogClicks, setDogClicks] = useState(0);
 
   // Préparer le player pour le miaulement
   const meowPlayer = useAudioPlayer(require("../assets/sounds/meow.mp3"));
@@ -62,6 +64,7 @@ export default function IndexScreen() {
   const handleButtonClick = async (name: string) => {
     if (name === "Chat") {
       console.log('Bouton "Chat" cliqué');
+      setChatClicks((prev) => prev + 1);
       meowPlayer.play(); // juste play(), plus besoin de loadAsync
       const isAvailable = await SMS.isAvailableAsync();
       if (isAvailable) {
@@ -72,6 +75,7 @@ export default function IndexScreen() {
       }
     } else if (name === "Dog") {
       console.log('Bouton "Dog" cliqué');
+      setDogClicks((prev) => prev + 1);
       fetch("https://dog.ceo/api/breeds/image/random")
         .then((response) => response.json())
         .then((data) => setDogImage(data.message))
