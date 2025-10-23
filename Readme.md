@@ -53,10 +53,7 @@ app/index.tsx : écran principal avec toutes les fonctionnalités.
 assets/ : images et sons utilisés dans l’application.
 Voici une version prête à être copiée-collée pour la section **Structure du projet** :
 
-```markdown
-## Structure du projet
 ```
-
 DogGPT/
 ├─ app/
 │ ├─ index.tsx # Écran principal avec toutes les fonctionnalités
@@ -67,7 +64,6 @@ DogGPT/
 ├─ package.json # Déclarations des dépendances et scripts
 ├─ tsconfig.json # Configuration TypeScript
 └─ app.json # Configuration Expo
-
 ```
 
 ---
@@ -76,4 +72,7 @@ DogGPT/
 
 Les permissions pour la luminosité et l’accès au SMS sont demandées au lancement.
 La lecture audio est locale, aucune permission supplémentaire n’est requise pour le son.
+
+```
+
 ```
