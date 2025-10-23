@@ -15,6 +15,7 @@ import * as SMS from "expo-sms";
 import { Image } from "react-native";
 import { Modal } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
@@ -33,6 +34,10 @@ export default function IndexScreen() {
   // ----- Initialisation Batterie & Luminosité -----
   useEffect(() => {
     (async () => {
+      const savedChatClicks = await AsyncStorage.getItem("chatClicks");
+      const savedDogClicks = await AsyncStorage.getItem("dogClicks");
+      if (savedChatClicks !== null) setChatClicks(Number(savedChatClicks));
+      if (savedDogClicks !== null) setDogClicks(Number(savedDogClicks));
       // 🔋 Batterie
       const level = await Battery.getBatteryLevelAsync();
       setBatteryLevel(level * 100);
@@ -65,6 +70,14 @@ export default function IndexScreen() {
     })();
   }, []);
 
+  useEffect(() => {
+    AsyncStorage.setItem("chatClicks", chatClicks.toString());
+  }, [chatClicks]);
+
+  useEffect(() => {
+    AsyncStorage.setItem("dogClicks", dogClicks.toString());
+  }, [dogClicks]);
+
   // ----- Gestion Menu -----
   const handleButtonClick = async (name: string) => {
     if (name === "Chat") {
@@ -91,9 +104,6 @@ export default function IndexScreen() {
         .then((data) => setDogImage(data.message))
         .catch((error) => console.error("Erreur fetch dog", error));
       setChatImage(null);
-    } else if (name === "Cliquer") {
-      console.log('Bouton "Cliquer" cliqué');
-      setModalVisible(true);
     }
   };
 
@@ -118,7 +128,9 @@ export default function IndexScreen() {
               onPress={() => {
                 setChatClicks(0);
                 setDogClicks(0);
-                setModalVisible(false); // fermer la modal après reset
+                AsyncStorage.removeItem("chatClicks");
+                AsyncStorage.removeItem("dogClicks");
+                setModalVisible(false);
               }}
             >
               <Text style={styles.buttonText}>Reset</Text>
