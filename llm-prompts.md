@@ -39,5 +39,3 @@ Puis en plus petits points traitables en 1 Prompt :
 ## Remarques
 
 Avec mon sdk (54), il n'est pas possible de exit l'app. On doit simuler pour android et c'est impossible sur iOS. (réponse de chat GPT, à vérifier)
-
-Le chat ne miaule pas bien que le media player existe
