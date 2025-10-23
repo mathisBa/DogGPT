@@ -36,6 +36,12 @@ Puis en plus petits points traitables en 1 Prompt :
 - ajouter un bouton à cet élément pour réinitialiser les compteurs
 - lorsque chat est cliqué afficher un chat
 
+- Todo extra rework Interface :
+- Ne pouvoir actionner qu'un bouton à la fois entre chien et chat.
+- Afficher les statistiques de cliquer en tant que pop-up
+- Déplacer le bouton cliquer en tant que fast action
+- Déplacer le bouton cliquer en haut à droite avec une icone
+
 ## Remarques
 
 Avec mon sdk (54), il n'est pas possible de exit l'app. On doit simuler pour android et c'est impossible sur iOS. (réponse de chat GPT, à vérifier)
