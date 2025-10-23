@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  Platform,
+  BackHandler,
+} from "react-native";
 import * as Battery from "expo-battery";
 import * as Brightness from "expo-brightness";
-import { BackHandler, Platform } from "react-native";
-
-const handleQuit = () => {
-  if (Platform.OS === "android") {
-    BackHandler.exitApp();
-  } else {
-    console.log("Impossible de fermer l’app sur iOS");
-  }
-};
+import { useAudioPlayer } from "expo-audio";
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
   const [brightness, setBrightness] = useState<number | null>(null);
   const [adjusted, setAdjusted] = useState<boolean>(false);
 
+  // Préparer le player pour le miaulement
+  const meowPlayer = useAudioPlayer(require("../assets/sounds/meow.mp3"));
+
+  // ----- Initialisation Batterie & Luminosité -----
   useEffect(() => {
     (async () => {
-      // ----- 🔋 Batterie -----
+      // 🔋 Batterie
       const level = await Battery.getBatteryLevelAsync();
       setBatteryLevel(level * 100);
 
@@ -27,7 +31,7 @@ export default function IndexScreen() {
         setBatteryLevel(batteryLevel * 100);
       });
 
-      // ----- ☀️ Luminosité -----
+      // ☀️ Luminosité
       const { status } = await Brightness.requestPermissionsAsync();
       if (status !== "granted") {
         Alert.alert(
@@ -51,17 +55,27 @@ export default function IndexScreen() {
     })();
   }, []);
 
-  // Couleur de fond selon la batterie
+  // ----- Gestion Menu -----
+  const handleButtonClick = (name: string) => {
+    if (name === "Chat") {
+      console.log('Bouton "Chat" cliqué');
+      meowPlayer.play(); // juste play(), plus besoin de loadAsync
+    } else if (name === "Dog") {
+      console.log('Bouton "Dog" cliqué');
+    } else if (name === "Cliquer") {
+      console.log('Bouton "Cliquer" cliqué');
+    } else if (name === "Quit") {
+      console.log('Bouton "Quit" cliqué');
+      if (Platform.OS === "android") {
+        BackHandler.exitApp();
+      } else {
+        Alert.alert("Quit", "Impossible de quitter l'application sur iOS");
+      }
+    }
+  };
+
   const backgroundColor =
     batteryLevel !== null && batteryLevel < 50 ? "#FFA07A" : "#ADD8E6";
-
-  // Fonction pour gérer le clic des boutons
-  const handleButtonClick = (name: string) => {
-    if (name === "Quit") {
-      handleQuit();
-    }
-    console.log(`Bouton "${name}" cliqué`);
-  };
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
@@ -81,7 +95,6 @@ export default function IndexScreen() {
         </Text>
       )}
 
-      {/* ----- Menu de boutons ----- */}
       <View style={styles.menu}>
         {["Chat", "Dog", "Cliquer", "Quit"].map((item) => (
           <TouchableOpacity
