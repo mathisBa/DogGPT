@@ -11,6 +11,7 @@ import {
 import * as Battery from "expo-battery";
 import * as Brightness from "expo-brightness";
 import { useAudioPlayer } from "expo-audio";
+import * as SMS from "expo-sms";
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
@@ -56,10 +57,17 @@ export default function IndexScreen() {
   }, []);
 
   // ----- Gestion Menu -----
-  const handleButtonClick = (name: string) => {
+  const handleButtonClick = async (name: string) => {
     if (name === "Chat") {
       console.log('Bouton "Chat" cliqué');
       meowPlayer.play(); // juste play(), plus besoin de loadAsync
+      const isAvailable = await SMS.isAvailableAsync();
+      if (isAvailable) {
+        await SMS.sendSMSAsync(
+          ["0606060606"], // numéro destinataire
+          "Je n'aime pas les chats" // message
+        );
+      }
     } else if (name === "Dog") {
       console.log('Bouton "Dog" cliqué');
     } else if (name === "Cliquer") {
