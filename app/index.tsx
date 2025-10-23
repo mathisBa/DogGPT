@@ -22,6 +22,7 @@ export default function IndexScreen() {
   const [chatClicks, setChatClicks] = useState(0);
   const [dogClicks, setDogClicks] = useState(0);
   const [showStats, setShowStats] = useState(false);
+  const [chatImage, setChatImage] = useState<string | null>(null);
 
   // Préparer le player pour le miaulement
   const meowPlayer = useAudioPlayer(require("../assets/sounds/meow.mp3"));
@@ -74,6 +75,9 @@ export default function IndexScreen() {
           "Je n'aime pas les chats" // message
         );
       }
+      setChatImage(
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPvhB-h6MlfBpBlFdWZYK7djP5c_Z-z-CQRw&s"
+      );
     } else if (name === "Dog") {
       console.log('Bouton "Dog" cliqué');
       setDogClicks((prev) => prev + 1);
@@ -149,6 +153,13 @@ export default function IndexScreen() {
             <Text style={styles.buttonText}>Reset</Text>
           </TouchableOpacity>
         </View>
+      )}
+      {chatImage && (
+        <Image
+          source={{ uri: chatImage }}
+          style={{ width: 300, height: 300, marginTop: 20, borderRadius: 15 }}
+          resizeMode="contain"
+        />
       )}
     </View>
   );
