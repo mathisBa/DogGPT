@@ -34,6 +34,7 @@ Puis en plus petits points traitables en 1 Prompt :
 - compter le nombre de clics de "chat" et le nombre de clics de "dog" sans l'afficher pour le moment
 - lorsque cliquer est cliqué, afficher le nombre de clics de "chat" et de "dog"
 - ajouter un bouton à cet élément pour réinitialiser les compteurs
+- lorsque chat est cliqué afficher un chat
 
 ## Remarques
 

@@ -21,6 +21,7 @@ export default function IndexScreen() {
   const [dogImage, setDogImage] = useState<string | null>(null);
   const [chatClicks, setChatClicks] = useState(0);
   const [dogClicks, setDogClicks] = useState(0);
+  const [showStats, setShowStats] = useState(false);
 
   // Préparer le player pour le miaulement
   const meowPlayer = useAudioPlayer(require("../assets/sounds/meow.mp3"));
@@ -82,6 +83,7 @@ export default function IndexScreen() {
         .catch((error) => console.error("Erreur fetch dog", error));
     } else if (name === "Cliquer") {
       console.log('Bouton "Cliquer" cliqué');
+      setShowStats(true); // afficher la vue stats
     } else if (name === "Quit") {
       console.log('Bouton "Quit" cliqué');
       if (Platform.OS === "android") {
@@ -131,11 +133,30 @@ export default function IndexScreen() {
           resizeMode="contain"
         />
       )}
+      {showStats && (
+        <View style={styles.statsContainer}>
+          <Text style={styles.statsText}>Chat : {chatClicks} clic(s)</Text>
+          <Text style={styles.statsText}>Dog : {dogClicks} clic(s)</Text>
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  statsContainer: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  statsText: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginVertical: 2,
+  },
+
   container: {
     flex: 1,
     alignItems: "center",
