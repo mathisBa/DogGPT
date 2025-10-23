@@ -12,11 +12,13 @@ import * as Battery from "expo-battery";
 import * as Brightness from "expo-brightness";
 import { useAudioPlayer } from "expo-audio";
 import * as SMS from "expo-sms";
+import { Image } from "react-native";
 
 export default function IndexScreen() {
   const [batteryLevel, setBatteryLevel] = useState<number | null>(null);
   const [brightness, setBrightness] = useState<number | null>(null);
   const [adjusted, setAdjusted] = useState<boolean>(false);
+  const [dogImage, setDogImage] = useState<string | null>(null);
 
   // Préparer le player pour le miaulement
   const meowPlayer = useAudioPlayer(require("../assets/sounds/meow.mp3"));
@@ -70,6 +72,10 @@ export default function IndexScreen() {
       }
     } else if (name === "Dog") {
       console.log('Bouton "Dog" cliqué');
+      fetch("https://dog.ceo/api/breeds/image/random")
+        .then((response) => response.json())
+        .then((data) => setDogImage(data.message))
+        .catch((error) => console.error("Erreur fetch dog", error));
     } else if (name === "Cliquer") {
       console.log('Bouton "Cliquer" cliqué');
     } else if (name === "Quit") {
@@ -114,6 +120,13 @@ export default function IndexScreen() {
           </TouchableOpacity>
         ))}
       </View>
+      {dogImage && (
+        <Image
+          source={{ uri: dogImage }}
+          style={{ width: 300, height: 300, marginTop: 20, borderRadius: 15 }}
+          resizeMode="contain"
+        />
+      )}
     </View>
   );
 }
